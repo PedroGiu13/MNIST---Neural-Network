@@ -1,10 +1,4 @@
-# Robust Handwritten Digit Classification: Generalization in Deep Networks
-
-**Module:** 7CCSMPNN: Pattern Recognition, Neural Networks and Deep Learning
-**Project Type:** Comparative Analysis of Neural Architectures (MLP vs. CNN)
-**Status:** [Active/Completed]
-
----
+# Handwritten Digit Classification - MLP & CNN
 
 ## 1. Executive Summary
 This project investigates the challenge of **domain adaptation** and **generalization** in deep learning. While achieving high accuracy on the standard MNIST dataset is a solved problem, maintaining that performance on "wild," unseen handwriting (with different strokes, thickness, and orientations) remains a challenge.
