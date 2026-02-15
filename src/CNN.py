@@ -1,4 +1,3 @@
-import numpy as np
 import keras_tuner as kt
 from tensorflow import keras
 from keras.datasets import mnist
