@@ -1,11 +1,11 @@
+import numpy as np
 import keras_tuner as kt
 from tensorflow import keras
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Activation, Dropout
 from keras.datasets import mnist
+from keras.models import Sequential
+from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
 from sklearn.model_selection import train_test_split
 from src.utils import plot_accuracy, plot_loss
-
 
 # Hyperparameters
 BATCH_SIZE = 128
@@ -13,34 +13,41 @@ EPOCHS = 30
 
 
 def build_model(hp):
-    input_size = (784,)
+    input_shape = (28, 28, 1)
     num_labels = 10
 
     model = Sequential()
 
-    # Input Layer
-    model.add(keras.Input(shape=input_size))
+    # Input layer
+    model.add(keras.Input(shape=input_shape))
 
-    # Hidden Layer 1
-    hp_units_1 = hp.Int("units_1", min_value=32, max_value=512, step=32)
-    model.add(Dense(units=hp_units_1))
-    model.add(Activation("relu"))
+    # Conv Layer 1
+    hp_filters_1 = hp.Int("filters_1", min_value=32, max_value=96, step=32)
+    hp_kernel = hp.Choice("kernel_size", values=[3, 5])
+    model.add(Conv2D(filters=hp_filters_1, kernel_size=hp_kernel, strides=1, padding="same", activation="relu"))
+    model.add(MaxPooling2D(padding="same"))
 
-    hp_dropout = hp.Float("dropout", min_value=0.0, max_value=0.5, step=0.1)
-    model.add(Dropout(hp_dropout))
+    # Check if another layer is necessary
+    if hp.Boolean("use_second_layer"):
+        hp_filters_2 = hp.Int("filters_2", min_value=64, max_value=256, step=64)
+        model.add(Conv2D(filters=hp_filters_2, kernel_size=hp_kernel, strides=1, padding="same", activation="relu"))
+        model.add(MaxPooling2D(padding="same"))
 
-    # Hidden Layer 2
-    hp_units_2 = hp.Int("units_2", min_value=32, max_value=512, step=32)
-    model.add(Dense(hp_units_2))
-    model.add(Activation("relu"))
+    model.add(Flatten())
+
+    # Dense Units
+    hp_dense = hp.Int("dense_units", min_value=64, max_value=256, step=64)
+    model.add(Dense(units=hp_dense, activation="relu"))
+
+    # Dropout
+    hp_dropout = hp.Float("dropout", 0.0, 0.5, step=0.1)
     model.add(Dropout(hp_dropout))
 
     # Output Layer
-    model.add(Dense(num_labels))
-    model.add(Activation("softmax"))
+    model.add(Dense(num_labels, activation="softmax"))
 
-    # Model Training
     hp_eta = hp.Choice("learning_rate", values=[0.01, 0.001, 0.0001])
+
     model.compile(
         loss="sparse_categorical_crossentropy",
         optimizer=keras.optimizers.Adam(learning_rate=hp_eta),
@@ -57,7 +64,7 @@ def model_tuner(X_train, y_train, X_val, y_val, epochs):
         max_trials=10,
         executions_per_trial=1,
         directory="hyperparameter_tuning",
-        project_name="mlp_tuning",
+        project_name="cnn_tuning",
     )
 
     tuner.search(
@@ -71,8 +78,14 @@ def model_tuner(X_train, y_train, X_val, y_val, epochs):
     best_hps = tuner.get_best_hyperparameters(num_trials=1)[0]
 
     print("\n===== Best Hyperparameters Found =====")
-    print(f"Units Layer 1: {best_hps.get('units_1')}")
-    print(f"Units Layer 2: {best_hps.get('units_2')}")
+    print(f"Filters Layer 1: {best_hps.get('filters_1')}")
+
+    if best_hps.get("use_second_layer"):
+        print(f"Filters Layer 2: {best_hps.get('filters_2')}")
+    else:
+        print("Filters Layer 2: Not Used (Single layer model chosen)")
+
+    print(f"Dense Units: {best_hps.get('dense_units')}")
     print(f"Dropout Rate: {best_hps.get('dropout')}")
     print(f"Learning Rate: {best_hps.get('learning_rate')}")
 
@@ -85,12 +98,11 @@ def data_processing(X_raw):
     # Standardize values
     X_processed = X_raw.astype("float32") / 255.0
     # Reshape
-    X_processed = X_processed.reshape((-1, 784))
-
+    X_processed = X_processed.reshape((-1, 28, 28, 1))
     return X_processed
 
 
-def mlp_network():
+def cnn_network():
     # Import data
     (X_train, y_train), (X_test, y_test) = mnist.load_data()
 
@@ -104,16 +116,21 @@ def mlp_network():
 
     # Tune Hyperparameters
     print("\n========= Hyperparameter Tuning =========")
-    mlp = model_tuner(X_train=X_train_hp, y_train=y_train_hp, X_val=X_val_hp, y_val=y_val_hp, epochs=10)
+    cnn = model_tuner(X_train=X_train_hp, y_train=y_train_hp, X_val=X_val_hp, y_val=y_val_hp, epochs=5)
 
     # Model Trainig
     print("\n========= Training Best Model =========")
-    history = mlp.fit(X_train, y_train, epochs=EPOCHS, batch_size=BATCH_SIZE, validation_split=0.1, verbose=1)
+    history = cnn.fit(X_train, y_train, epochs=EPOCHS, batch_size=BATCH_SIZE, validation_split=0.1, verbose=1)
 
     # Model Evaluation
     print("\n========= Best MLP Performance =========")
-    test_loss, test_acc = mlp.evaluate(X_test, y_test)
+    test_loss, test_acc = cnn.evaluate(X_test, y_test)
+    print(f"Train Accuracy: {history.history['accuracy'][-1]:.4f}")
+    print(f"Validation Accuracy: {history.history['val_accuracy'][-1]:.4f}")
     print(f"Test Accuracy: {test_acc:.4f}")
+
+    print(f"Train Loss: {history.history['loss'][-1]:.4f}")
+    print(f"Validation Loss: {history.history['val_loss'][-1]:.4f}")
     print(f"Test Loss: {test_loss:.4f}")
 
     # Visualize the model
@@ -122,15 +139,15 @@ def mlp_network():
         history.history["val_accuracy"],
         test_acc,
         EPOCHS,
-        "Accuracy - MLP ",
-        "mlp_accuracy",
+        "Accuracy - CNN ",
+        "cnn_accuracy",
     )
-    plot_loss(history.history["loss"], history.history["val_loss"], test_loss, EPOCHS, "Loss - MLP", "mlp_loss")
+    plot_loss(history.history["loss"], history.history["val_loss"], test_loss, EPOCHS, "Loss - CNN", "cnn_loss")
 
     # Save model
-    mlp.save("/models/mlp.h5")
+    cnn.save("models/cnn.h5")
     print("Model Saved")
 
 
 if __name__ == "__main__":
-    mlp_network()
+    cnn_network()
