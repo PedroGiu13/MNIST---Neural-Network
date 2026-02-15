@@ -1,0 +1,32 @@
+# Virtual Environment
+venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Jupyter
+.ipynb_checkpoints/
+notebooks/.ipynb_checkpoints/
+
+# Model Artifacts
+models/
+*.h5
+*.keras
+
+# Keras Tuner
+hyperparameter_tuning/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# TensorFlow checkpoints
+*.ckpt
+*.index
+*.data-*
