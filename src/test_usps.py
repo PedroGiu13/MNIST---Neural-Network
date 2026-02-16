@@ -18,7 +18,6 @@ def load_and_preprocess_usps():
         y_raw = y_raw - 1
 
     X_resized = []
-    print("[INFO] Resizing images...")
 
     for row in X_raw:
         img_16 = row.reshape(16, 16)
@@ -40,7 +39,6 @@ def evaluate_both_models():
     X_usps_flat = X_usps_img.reshape(-1, 784)
 
     # 2. Load Models
-    print(f"[INFO] Loading MLP from {MLP_PATH}...")
     try:
         mlp = tf.keras.models.load_model(MLP_PATH)
         cnn = tf.keras.models.load_model(CNN_PATH)
@@ -49,13 +47,11 @@ def evaluate_both_models():
         return
 
     # 3. Predict MLP (Uses Flat Data)
-    print("[INFO] predicting with MLP...")
     pred_mlp = mlp.predict(X_usps_flat, verbose=0)
     y_pred_mlp = np.argmax(pred_mlp, axis=1)
     acc_mlp = accuracy_score(y_usps, y_pred_mlp)
 
     # 4. Predict CNN (Uses Image Data)
-    print("[INFO] predicting with CNN...")
     pred_cnn = cnn.predict(X_usps_img, verbose=0)
     y_pred_cnn = np.argmax(pred_cnn, axis=1)
     acc_cnn = accuracy_score(y_usps, y_pred_cnn)
