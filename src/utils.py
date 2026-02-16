@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 
 
 def plot_accuracy(train_acc, val_acc, test_acc, epochs, title, file_name):
@@ -45,5 +46,23 @@ def plot_loss(train_loss, val_loss, test_loss, epochs, title, file_name):
     # Save img
     save_path = f"img/{file_name}.png"
     plt.savefig(save_path)
+
+    plt.show()
+
+
+def plot_confusion_matrix(y_mnist, y_pred, title, file_name):
+    cm = confusion_matrix(y_mnist, y_pred)
+
+    disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=range(10))
+
+    fig, ax = plt.subplots(figsize=(10, 10))
+    disp.plot(cmap="Blues", ax=ax, values_format="d")
+    plt.title(title, fontsize=16)
+    plt.ylabel("True Label", fontsize=12)
+    plt.xlabel("Predicted Label", fontsize=12)
+
+    # Save img
+    save_path = f"img/{file_name}.png"
+    plt.savefig(save_path, bbox_inches="tight")
 
     plt.show()

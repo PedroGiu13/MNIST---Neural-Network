@@ -1,3 +1,4 @@
+import numpy as np
 import keras_tuner as kt
 from tensorflow import keras
 from keras.datasets import mnist
@@ -5,7 +6,7 @@ from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from sklearn.model_selection import train_test_split
-from src.utils import plot_accuracy, plot_loss
+from src.utils import plot_accuracy, plot_loss, plot_confusion_matrix
 
 # Hyperparameters
 BATCH_SIZE = 128
@@ -13,41 +14,59 @@ EPOCHS = 30
 
 
 def build_model(hp):
+    """Build model architecture for hyperparameter tunning
+
+    Function that defines the general structure of a CNN with the location of key structural hyperparameters that need to be tunned to find the most optima model
+    Args:
+        hp (keras_tunner.HyperParameters): HyperParameters object used to define the search space for the model
+
+    Returns:
+        model: compiled keras model with initial hyperparameters, ready for training
+    """
+    # Define shape of inputs (features) and number of expected outputs (labels)
     input_shape = (28, 28, 1)
     num_labels = 10
 
+    # Initialize model selection
     model = Sequential()
 
     # Input layer
     model.add(keras.Input(shape=input_shape))
 
-    # Conv Layer 1
+    # Conv Layer 1:
+    # HP to tune: finters (32-96), kernel size (3x3 or 5x5)
     hp_filters_1 = hp.Int("filters_1", min_value=32, max_value=96, step=32)
     hp_kernel = hp.Choice("kernel_size", values=[3, 5])
     model.add(Conv2D(filters=hp_filters_1, kernel_size=hp_kernel, strides=1, padding="same", activation="relu"))
     model.add(MaxPooling2D(padding="same"))
 
-    # Check if another layer is necessary
+    # Conv Layer 2:
+    # HP to tune: decide if additional layer is necessay. If yes tune: filters (64-925)
+    # Kernel size remains the same
     if hp.Boolean("use_second_layer"):
         hp_filters_2 = hp.Int("filters_2", min_value=64, max_value=256, step=64)
         model.add(Conv2D(filters=hp_filters_2, kernel_size=hp_kernel, strides=1, padding="same", activation="relu"))
         model.add(MaxPooling2D(padding="same"))
 
+    # Flatten layer to connect to fully connected ANN
     model.add(Flatten())
 
-    # Dense Units
+    # Classification Units:
+    # HP to tune: number of units (64 - 256)
     hp_dense = hp.Int("dense_units", min_value=64, max_value=256, step=64)
     model.add(Dense(units=hp_dense, activation="relu"))
 
-    # Dropout
+    # Dropout: hyperparameters = dropout rate
     hp_dropout = hp.Float("dropout", 0.0, 0.5, step=0.1)
     model.add(Dropout(hp_dropout))
 
     # Output Layer
     model.add(Dense(num_labels, activation="softmax"))
 
+    # Learning Rate: hyperparameter = learning rate
     hp_eta = hp.Choice("learning_rate", values=[0.01, 0.001, 0.0001])
 
+    # Compile entire model
     model.compile(
         loss="sparse_categorical_crossentropy",
         optimizer=keras.optimizers.Adam(learning_rate=hp_eta),
@@ -58,6 +77,21 @@ def build_model(hp):
 
 
 def model_tuner(X_train, y_train, X_val, y_val, epochs):
+    """Tune hyperparameters for most optimal CNN
+
+    This funtion iterates through all the hyperparameters defined in the model. Tests the performance on the validation set (accuracy) and chooses the parameters that produce the highest accuracy as the best model
+
+    Args:
+        X_train np.array: training features
+        y_train np.array: training labels
+        X_val np.array: validation features
+        y_val np.array: validation labels
+        epochs int: number od iterations
+
+    Returns:
+        best_model: model with the best hyperparameters
+    """
+    # Initialize Random Search with the given model structure and other parameters
     tuner = kt.RandomSearch(
         build_model,
         objective="val_accuracy",
@@ -67,6 +101,7 @@ def model_tuner(X_train, y_train, X_val, y_val, epochs):
         project_name="cnn_tuning",
     )
 
+    # Iterative process to find the most optimal model
     tuner.search(
         X_train,
         y_train,
@@ -141,6 +176,10 @@ def cnn_network():
         verbose=1,
     )
 
+    # Model Prediction
+    cnn_pred = cnn.predict(X_test)
+    y_pred = np.argmax(cnn_pred, axis=1)
+
     # Model Evaluation
     print("\n========= Best MLP Performance =========")
     test_loss, test_acc = cnn.evaluate(X_test, y_test)
@@ -161,6 +200,7 @@ def cnn_network():
         "Accuracy - CNN ",
         "cnn_accuracy",
     )
+
     plot_loss(
         history.history["loss"],
         history.history["val_loss"],
@@ -169,6 +209,8 @@ def cnn_network():
         "Loss - CNN",
         "cnn_loss",
     )
+
+    plot_confusion_matrix(y_mnist=y_test, y_pred=y_pred, title="CNN - Confusion Matrix", file_name="cnn_cm")
 
     # Save model
     cnn.save("models/cnn.h5")
