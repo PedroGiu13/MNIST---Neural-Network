@@ -1,7 +1,7 @@
 import keras_tuner as kt
 from tensorflow import keras
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Activation, Dropout
+from keras.models import Sequential
+from keras.layers import Dense, Activation, Dropout
 from keras.datasets import mnist
 from sklearn.model_selection import train_test_split
 from src.utils import plot_accuracy, plot_loss
