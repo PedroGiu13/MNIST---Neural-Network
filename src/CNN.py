@@ -3,6 +3,7 @@ from tensorflow import keras
 from keras.datasets import mnist
 from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from sklearn.model_selection import train_test_split
 from src.utils import plot_accuracy, plot_loss
 
@@ -76,7 +77,6 @@ def model_tuner(X_train, y_train, X_val, y_val, epochs):
 
     best_hps = tuner.get_best_hyperparameters(num_trials=1)[0]
 
-    print("\n===== Best Hyperparameters Found =====")
     print(f"Filters Layer 1: {best_hps.get('filters_1')}")
 
     if best_hps.get("use_second_layer"):
@@ -106,20 +106,40 @@ def cnn_network():
     (X_train, y_train), (X_test, y_test) = mnist.load_data()
 
     # Process data
-    X_train = data_processing(X_train)
+    X_train_full = data_processing(X_train)
     X_test = data_processing(X_test)
 
-    X_train_hp, X_val_hp, y_train_hp, y_val_hp = train_test_split(
-        X_train, y_train, test_size=0.2, random_state=42, stratify=y_train
+    X_train, X_val, y_train, y_val = train_test_split(
+        X_train_full, y_train, test_size=0.1, random_state=30, stratify=y_train
     )
+
+    print("\n========= Data Information =========")
+    print(f"Training Samples: {len(X_train)}")
+    print(f"Validation Samples: {len(X_val)}")
+    print(f"Test Samples: {len(X_test)}")
 
     # Tune Hyperparameters
     print("\n========= Hyperparameter Tuning =========")
-    cnn = model_tuner(X_train=X_train_hp, y_train=y_train_hp, X_val=X_val_hp, y_val=y_val_hp, epochs=5)
+    cnn = model_tuner(X_train=X_train, y_train=y_train, X_val=X_val, y_val=y_val, epochs=10)
 
     # Model Trainig
     print("\n========= Training Best Model =========")
-    history = cnn.fit(X_train, y_train, epochs=EPOCHS, batch_size=BATCH_SIZE, validation_split=0.1, verbose=1)
+
+    data_augmentation = ImageDataGenerator(
+        rotation_range=10, width_shift_range=0.1, height_shift_range=0.1, zoom_range=0.1
+    )
+
+    train_data_gen = data_augmentation.flow(X_train, y_train, batch_size=BATCH_SIZE)
+
+    history = cnn.fit(
+        train_data_gen,
+        epochs=EPOCHS,
+        batch_size=BATCH_SIZE,
+        # steps_per_epoch=len(X_train) // EPOCHS,
+        validation_data=(X_val, y_val),
+        callbacks=[keras.callbacks.EarlyStopping(patience=5, restore_best_weights=True)],
+        verbose=1,
+    )
 
     # Model Evaluation
     print("\n========= Best MLP Performance =========")
@@ -137,11 +157,18 @@ def cnn_network():
         history.history["accuracy"],
         history.history["val_accuracy"],
         test_acc,
-        EPOCHS,
+        len(history.history["accuracy"]),
         "Accuracy - CNN ",
         "cnn_accuracy",
     )
-    plot_loss(history.history["loss"], history.history["val_loss"], test_loss, EPOCHS, "Loss - CNN", "cnn_loss")
+    plot_loss(
+        history.history["loss"],
+        history.history["val_loss"],
+        test_loss,
+        len(history.history["loss"]),
+        "Loss - CNN",
+        "cnn_loss",
+    )
 
     # Save model
     cnn.save("models/cnn.h5")
