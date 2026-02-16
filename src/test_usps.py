@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 from sklearn.datasets import fetch_openml
 from sklearn.metrics import accuracy_score, confusion_matrix, ConfusionMatrixDisplay
 
-MLP_PATH = "models/mlp.h5"
-CNN_PATH = "models/cnn.h5"
+MLP_PATH = "models/mlp_1.h5"
+CNN_PATH = "models/cnn_1.h5"
 
 
 def load_and_preprocess_usps():

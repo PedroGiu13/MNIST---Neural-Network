@@ -34,7 +34,7 @@ def build_model(hp):
     model.add(keras.Input(shape=input_shape))
 
     # Conv Layer 1:
-    # HP to tune: finters (32-96), kernel size (3x3 or 5x5)
+    # HP to tune: filters (32-96), kernel size (3x3 or 5x5)
     hp_filters_1 = hp.Int("filters_1", min_value=32, max_value=96, step=32)
     hp_kernel = hp.Choice("kernel_size", values=[3, 5])
     model.add(Conv2D(filters=hp_filters_1, kernel_size=hp_kernel, strides=1, padding="same", activation="relu"))
@@ -181,7 +181,7 @@ def cnn_network():
     y_pred = np.argmax(cnn_pred, axis=1)
 
     # Model Evaluation
-    print("\n========= Best MLP Performance =========")
+    print("\n========= Best CNN Performance =========")
     test_loss, test_acc = cnn.evaluate(X_test, y_test)
     print(f"Train Accuracy: {history.history['accuracy'][-1]:.4f}")
     print(f"Validation Accuracy: {history.history['val_accuracy'][-1]:.4f}")
