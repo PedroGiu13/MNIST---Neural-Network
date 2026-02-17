@@ -12,29 +12,28 @@ Both neural netweworks where trained using the same data (MNIST dataset) and the
 ## Components
 ### 1. Multilayer Perceptron (MLP)
 
-**What is a Multilayer Perceptron?**
+**- What is a Multilayer Perceptron?**
 
 An MLP is a type of Feed Forward Network consiting of one input layer, no more than 3 hidden layers, and one output layer. Each layer has a set of Linear Threshold Units (neurons) that are interconnected by links, and each link has an associated connection weight. In addtion, each layer has a single Bias unit that is connected to all the units in the subsecuent layer. In theory, any three layer (input - hidden - output) MLP should be a Universal Approximator, meaning it is capable of modelling any non linear function arbitrarly well.
 
-**MLP Architecture**
+**- MLP Architecture**
 
-| Layer        | Type      | Output Shape | Parameters |
-|------------|----------|-------------|------------|
-| Input       | —        | (784)       | 0          |
-| Dense_1     | Dense    | (224)       | 175,840    |
-| Activation  | ReLU     | (224)       | 0          |
-| Dropout     | 0.3      | (224)       | 0          |
-| Dense_2     | Dense    | (288)       | 64,800     |
-| Activation  | ReLU     | (288)       | 0          |
-| Dropout     | 0.3      | (288)       | 0          |
-| Output      | Dense    | (10)        | 2,890      |
-| Activation  | Softmax  | (10)        | 0          |
+Input (784) → Dense(224) → ReLU → Dropout → Dense(288) → ReLU → Dropout → Dense(10) → Softmax
 
-**Total Parameters:** 243,530
+| Layer | Type | Output Shape | Parameters |
+|-------|------|-------------|------------|
+| dense | Dense (224 units) | (224) | 175,840 |
+| activation | ReLU | (224) | 0 |
+| dropout | Dropout | (224) | 0 |
+| dense_1 | Dense (288 units) | (288) | 64,800 |
+| activation_1 | ReLU | (288) | 0 |
+| dropout_1 | Dropout | (288) | 0 |
+| dense_2 | Dense (10 units) | (10) | 2,890 |
+| activation_2 | Softmax | (10) | 0 |
 
+**Total Parameters:** 243,532  
 
-
-**Training**
+**- Training**
 - Hyperparameter Tunning
 - Best model training
 - Data Augmentation
@@ -44,14 +43,14 @@ An MLP is a type of Feed Forward Network consiting of one input layer, no more t
 | ![MLP Accuracy](img/mlp_model_accuracy.png) | ![MLP Loss](img/mlp_model_loss.png) |
 
 
-**Performance**
+**- Performance**
  
 ### 2. Convolutional Neural Network (CNN)
-**What is a Convolutional Neural Network?**
+**- What is a Convolutional Neural Network?**
 
-**CNN Architecture**
+**- CNN Architecture**
 
-Input → Conv2D(32) → MaxPool → Conv2D(192) → MaxPool → Flatten → Dense(128) → Dropout → Dense(10)
+Input → Conv2D(32) → MaxPool → Conv2D(192) → MaxPool → Flatten → Dense(128) → Dropout → Dense(10) → Softmax
 
 | Layer | Type | Output Shape | Parameters |
 |-------|------|-------------|------------|
@@ -64,19 +63,13 @@ Input → Conv2D(32) → MaxPool → Conv2D(192) → MaxPool → Flatten → Den
 | dropout | Dropout | (128) | 0 |
 | dense_1 | Dense (Softmax) | (10) | 1,290 |
 
----
-
 **Total Parameters:** 1,261,452  
-**Trainable Parameters:** 1,261,450  
-**Non-trainable Parameters:** 0  
 
 
+**- Training**
 
 
-**Training**
-
-
-**Performance**
+**- Performance**
 
 
 ---
