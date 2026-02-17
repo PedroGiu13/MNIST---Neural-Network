@@ -12,22 +12,10 @@ Both neural netweworks where trained using the same data (MNIST dataset) and the
 **What is a Multilayer Perceptron?**
 An MLP is a type of Feed Forward Network consiting of one input layer, no more than 3 hidden layers and one output layer. Each layer has a set of Linear Threshold Units (neurons) that are interconnected by links, and each link has an associated connection weight. In addtion, each layer has a single Bias unit that is connected to all the units in the subsecuent layer. In theory, any three layer (input - hidden - output) MLP should be a Universal Approximator, meaning it is capable of modelling any non linear function arbitrarly well.
 
-**Architecture**
+**MLP Architecture**
 
 
-**Training**
-
-
-**Performance**
-
-### 2. Convolutional Neural Network
-**What is a Multilayer Perceptron?**
-An MLP is a type of Feed Forward Network consiting of one input layer, no more than 3 hidden layers and one output layer. Each layer has a set of Linear Threshold Units (neurons) that are interconnected by links, and each link has an associated connection weight. In addtion, each layer has a single Bias unit that is connected to all the units in the subsecuent layer. In theory, any three layer (input - hidden - output) MLP should be a Universal Approximator, meaning it is capable of modelling any non linear function arbitrarly well.
-
-**Architecture**
-
-
-**Training**
+#### **Training**
 - Hyperparameter Tunning
 - Best model training
 - Data Augmentation
@@ -35,6 +23,17 @@ An MLP is a type of Feed Forward Network consiting of one input layer, no more t
 | Accuracy | Loss |
 | :---: | :---: |
 | ![MLP Accuracy](img/mlp_model_accuracy.png) | ![MLP Loss](img/mlp_model_loss.png) |
+
+
+**Performance**
+ 
+### 2. Convolutional Neural Network (CNN)
+**What is a Convolutional Neural Network?**
+
+**CNN Architecture**
+
+
+**Training**
 
 
 **Performance**
