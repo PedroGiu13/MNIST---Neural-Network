@@ -19,7 +19,7 @@ An MLP is a type of Feed Forward Network consiting of one input layer, no more t
 **MLP Architecture**
 
 | Layer        | Type      | Output Shape | Parameters |
-|:-----------:|:--------:|:-----------:|:----------:|
+|------------|----------|-------------|------------|
 | Input       | —        | (784)       | 0          |
 | Dense_1     | Dense    | (224)       | 175,840    |
 | Activation  | ReLU     | (224)       | 0          |
@@ -50,6 +50,27 @@ An MLP is a type of Feed Forward Network consiting of one input layer, no more t
 **What is a Convolutional Neural Network?**
 
 **CNN Architecture**
+
+Input → Conv2D(32) → MaxPool → Conv2D(192) → MaxPool → Flatten → Dense(128) → Dropout → Dense(10)
+
+| Layer | Type | Output Shape | Parameters |
+|-------|------|-------------|------------|
+| conv2d | Conv2D | (28, 28, 32) | 320 |
+| max_pooling2d | MaxPooling2D | (14, 14, 32) | 0 |
+| conv2d_1 | Conv2D | (14, 14, 192) | 55,488 |
+| max_pooling2d_1 | MaxPooling2D | (7, 7, 192) | 0 |
+| flatten | Flatten | (9,408) | 0 |
+| dense | Dense (ReLU) | (128) | 1,204,352 |
+| dropout | Dropout | (128) | 0 |
+| dense_1 | Dense (Softmax) | (10) | 1,290 |
+
+---
+
+**Total Parameters:** 1,261,452  
+**Trainable Parameters:** 1,261,450  
+**Non-trainable Parameters:** 0  
+
+
 
 
 **Training**
