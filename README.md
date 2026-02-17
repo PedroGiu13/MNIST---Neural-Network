@@ -143,8 +143,6 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
----
-
 ## Requirements
 
 - tensorflow==2.20.0  
@@ -155,7 +153,6 @@ pip install -r requirements.txt
 - matplotlib==3.10.8  
 - opencv-python==4.13.0.92  
 
----
 
 ## Usage
 
