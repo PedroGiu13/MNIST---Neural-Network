@@ -130,6 +130,14 @@ def model_tuner(X_train, y_train, X_val, y_val, epochs):
 
 
 def data_processing(X_raw):
+    """Process data to meet model input requirements
+
+    Args:
+        X_raw (np.array): raw dataset of features
+
+    Returns:
+        _X_processed: processed data
+    """
     # Standardize values
     X_processed = X_raw.astype("float32") / 255.0
     # Reshape
@@ -138,6 +146,10 @@ def data_processing(X_raw):
 
 
 def cnn_network():
+    """Orchestrator function.
+
+    This function is responsible taking all the steps required to import, build, train, predict, and plot outputs of the model
+    """
     # Import data
     (X_train, y_train), (X_test, y_test) = mnist.load_data()
 
