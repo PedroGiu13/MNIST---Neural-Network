@@ -44,7 +44,10 @@ Input (784) → Dense(224) → ReLU → Dropout → Dense(288) → ReLU → Drop
 
 
 **- Performance**
-![MLP Confusion Matrix](img/mlp_model_cm.png)
+<div align="center">
+  <img src="./img/mlp_model_cm.png" width="80%" alt="MLP confusion Matrix">
+  <!-- <p><em>Figure 1: Visual representation of the model layers and tensor shapes.</em></p> -->
+</div>
 
  
 ### 2. Convolutional Neural Network (CNN)
