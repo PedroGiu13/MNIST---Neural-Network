@@ -11,6 +11,7 @@ from src.utils import plot_accuracy, plot_loss, plot_confusion_matrix
 # Hyperparameters
 BATCH_SIZE = 128
 EPOCHS = 30
+MODEL_NAME = "mlp_model"
 
 
 def build_model(hp):
@@ -171,7 +172,7 @@ def mlp_network():
         test_acc,
         len(history.history["accuracy"]),
         "Accuracy - MLP ",
-        "mlp_accuracy",
+        f"{MODEL_NAME}_accuracy",
     )
     plot_loss(
         history.history["loss"],
@@ -179,13 +180,13 @@ def mlp_network():
         test_loss,
         len(history.history["loss"]),
         "Loss - MLP",
-        "mlp_loss",
+        f"{MODEL_NAME}_loss",
     )
 
-    plot_confusion_matrix(y_mnist=y_test, y_pred=y_pred, title="CNN - Confusion Matrix", file_name="mlp_cm")
+    plot_confusion_matrix(y_mnist=y_test, y_pred=y_pred, title="CNN - Confusion Matrix", file_name=f"{MODEL_NAME}_cm")
 
     # Save model
-    mlp.save("models/mlp.h5")
+    mlp.save(f"models/{MODEL_NAME}.h5")
     print("Model Saved")
 
 
