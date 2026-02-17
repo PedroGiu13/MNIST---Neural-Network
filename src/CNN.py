@@ -11,6 +11,7 @@ from src.utils import plot_accuracy, plot_loss, plot_confusion_matrix
 # Hyperparameters
 BATCH_SIZE = 128
 EPOCHS = 30
+MODEL_NAME = "cnn_1_check_42"
 
 
 def build_model(hp):
@@ -155,7 +156,7 @@ def cnn_network():
 
     # Tune Hyperparameters
     print("\n========= Hyperparameter Tuning =========")
-    cnn = model_tuner(X_train=X_train, y_train=y_train, X_val=X_val, y_val=y_val, epochs=10)
+    cnn = model_tuner(X_train=X_train, y_train=y_train, X_val=X_val, y_val=y_val, epochs=5)
 
     # Model Trainig
     print("\n========= Training Best Model =========")
@@ -198,7 +199,7 @@ def cnn_network():
         test_acc,
         len(history.history["accuracy"]),
         "Accuracy - CNN ",
-        "cnn_accuracy",
+        f"{MODEL_NAME}_accuracy",
     )
 
     plot_loss(
@@ -207,13 +208,13 @@ def cnn_network():
         test_loss,
         len(history.history["loss"]),
         "Loss - CNN",
-        "cnn_loss",
+        f"{MODEL_NAME}_loss",
     )
 
-    plot_confusion_matrix(y_mnist=y_test, y_pred=y_pred, title="CNN - Confusion Matrix", file_name="cnn_cm")
+    plot_confusion_matrix(y_mnist=y_test, y_pred=y_pred, title="CNN - Confusion Matrix", file_name=f"{MODEL_NAME}_cm")
 
     # Save model
-    cnn.save("models/cnn.h5")
+    cnn.save(f"models/{MODEL_NAME}.h5")
     print("Model Saved")
 
 
