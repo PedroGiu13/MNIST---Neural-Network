@@ -107,43 +107,72 @@ Input → Conv2D(32) → MaxPool → Conv2D(192) → MaxPool → Flatten → Den
 ---
 ## Performance in new domain
 <div align="center">
-  <img src="./img//mlp_cnn_cm.png width="50%" alt="MLP vs. CNN Confusion Matrix">
+  <img src="./img//mlp_cnn_cm.png" width="50%" alt="MLP vs. CNN Confusion Matrix">
 </div>
 
 ---
+
 ## Installation & Setup
 
-### Requirements
-tensorflow==2.20.0
-keras==3.13.2
-keras-tuner==1.4.8
-scikit-learn==1.8.0
-numpy==2.4.2
-matplotlib==3.10.8
-opencv-python==4.13.0.92
+Follow the steps below to run the project locally.
 
-### Basic Usage
+### 1. Clone the Repository
 
-To run this project locally, follow these steps:
-
-**1. Clone the Repository***
 ```bash
-git clone [https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git](https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git)
-cd YOUR_REPO_NAME
+git clone https://github.com/PedroGiu13/MNIST---Neural-Network.git
+cd MNIST---Neural-Network
+```
 
+### 2. Create and Activate a Virtual Environment
 
+**Windows**
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
 
+**macOS / Linux**
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
 
+### 3. Install Dependencies
 
+```bash
+pip install -r requirements.txt
+```
 
+---
 
+## Requirements
 
+- tensorflow==2.20.0  
+- keras==3.13.2  
+- keras-tuner==1.4.8  
+- scikit-learn==1.8.0  
+- numpy==2.4.2  
+- matplotlib==3.10.8  
+- opencv-python==4.13.0.92  
 
+---
 
+## Usage
 
+### Train the MLP Model
 
+```bash
+python src/MLP.py
+```
 
+### Train the CNN Model
 
+```bash
+python src/CNN.py
+```
 
+### Evaluate on Unseen USPS Data
 
-
+```bash
+python src/test_usps.py
+```
