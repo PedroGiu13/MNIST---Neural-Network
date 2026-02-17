@@ -38,14 +38,25 @@ Input (784) → Dense(224) → ReLU → Dropout → Dense(288) → ReLU → Drop
 - Best model training
 - Data Augmentation
 
-| Accuracy | Loss |
-| :---: | :---: |
-| ![MLP Accuracy](img/mlp_model_accuracy.png) | ![MLP Loss](img/mlp_model_loss.png) |
+<table width="100%">
+  <tr>
+    <th align="center">Accuracy</th>
+    <th align="center">Loss</th>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="img/mlp_model_accuracy.png" width="90%" alt="MLP Accuracy Plot">
+    </td>
+    <td align="center">
+      <img src="img/mlp_model_loss.png" width="90%" alt="MLP Loss Plot">
+    </td>
+  </tr>
+</table>
 
 
 **- Performance**
 <div align="center">
-  <img src="./img/mlp_model_cm.png" width="80%" alt="MLP confusion Matrix">
+  <img src="./img/mlp_model_cm.png" width="50%" alt="MLP confusion Matrix">
   <!-- <p><em>Figure 1: Visual representation of the model layers and tensor shapes.</em></p> -->
 </div>
 
