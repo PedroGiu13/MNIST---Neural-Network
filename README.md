@@ -57,7 +57,6 @@ Input (784) → Dense(224) → ReLU → Dropout → Dense(288) → ReLU → Drop
 **- Performance**
 <div align="center">
   <img src="./img/mlp_model_cm.png" width="50%" alt="MLP confusion Matrix">
-  <!-- <p><em>Figure 1: Visual representation of the model layers and tensor shapes.</em></p> -->
 </div>
 
  
@@ -84,12 +83,26 @@ Input → Conv2D(32) → MaxPool → Conv2D(192) → MaxPool → Flatten → Den
 
 **- Training**
 
-| Accuracy | Loss |
-| :---: | :---: |
-| ![CNN Accuracy](img/cnn_model_accuracy.png) | ![CNN Loss](img/cnn_model_loss.png) |
+<table width="100%">
+  <tr>
+    <th align="center">Accuracy</th>
+    <th align="center">Loss</th>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="img/cnn_model_accuracy.png" width="90%" alt="MLP Accuracy Plot">
+    </td>
+    <td align="center">
+      <img src="img/cnn_model_loss.png" width="90%" alt="MLP Loss Plot">
+    </td>
+  </tr>
+</table>
+
 
 **- Performance**
-![CNN Confusion Matrix](img/cnn_model_cm.png)
+<div align="center">
+  <img src="./img/cnn_model_cm.png" width="50%" alt="MLP confusion Matrix">
+</div>
 
 ---
 ## Performance in new domain
