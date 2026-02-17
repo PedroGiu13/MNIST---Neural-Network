@@ -90,10 +90,10 @@ Input → Conv2D(32) → MaxPool → Conv2D(192) → MaxPool → Flatten → Den
   </tr>
   <tr>
     <td align="center">
-      <img src="img/cnn_model_accuracy.png" width="90%" alt="MLP Accuracy Plot">
+      <img src="img/cnn_model_accuracy.png" width="90%" alt="CNN Accuracy Plot">
     </td>
     <td align="center">
-      <img src="img/cnn_model_loss.png" width="90%" alt="MLP Loss Plot">
+      <img src="img/cnn_model_loss.png" width="90%" alt="CNN Loss Plot">
     </td>
   </tr>
 </table>
@@ -101,16 +101,35 @@ Input → Conv2D(32) → MaxPool → Conv2D(192) → MaxPool → Flatten → Den
 
 **- Performance**
 <div align="center">
-  <img src="./img/cnn_model_cm.png" width="50%" alt="MLP confusion Matrix">
+  <img src="./img/cnn_model_cm.png" width="50%" alt="CNN confusion Matrix">
 </div>
 
 ---
 ## Performance in new domain
+<div align="center">
+  <img src="./img//mlp_cnn_cm.png width="50%" alt="MLP vs. CNN Confusion Matrix">
+</div>
 
+---
+## Installation & Setup
 
+### Requirements
+tensorflow==2.20.0
+keras==3.13.2
+keras-tuner==1.4.8
+scikit-learn==1.8.0
+numpy==2.4.2
+matplotlib==3.10.8
+opencv-python==4.13.0.92
 
+### Basic Usage
 
+To run this project locally, follow these steps:
 
+**1. Clone the Repository***
+```bash
+git clone [https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git](https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git)
+cd YOUR_REPO_NAME
 
 
 
