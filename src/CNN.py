@@ -11,7 +11,7 @@ from src.utils import plot_accuracy, plot_loss, plot_confusion_matrix
 # Hyperparameters
 BATCH_SIZE = 128
 EPOCHS = 30
-MODEL_NAME = "cnn_1_check_42"
+MODEL_NAME = "cnn_model"
 
 
 def build_model(hp):
