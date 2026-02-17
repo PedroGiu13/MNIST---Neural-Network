@@ -6,16 +6,33 @@ This project investigates the chanllenges of building and training an Artificial
 Both neural netweworks where trained using the same data (MNIST dataset) and then tested in a completely new dataset (USPS dataset). The end goal of the project is to understand how and why deep neural networks excell at this type of classification problems, and why 'shallower' neural networks struggle. Although, it should be theoretically possible to approximate any continuous function using a "simple" three layer ANN.
 
 ---
+## Data
 
+---
 ## Components
 ### 1. Multilayer Perceptron (MLP)
 **What is a Multilayer Perceptron?**
-An MLP is a type of Feed Forward Network consiting of one input layer, no more than 3 hidden layers and one output layer. Each layer has a set of Linear Threshold Units (neurons) that are interconnected by links, and each link has an associated connection weight. In addtion, each layer has a single Bias unit that is connected to all the units in the subsecuent layer. In theory, any three layer (input - hidden - output) MLP should be a Universal Approximator, meaning it is capable of modelling any non linear function arbitrarly well.
+An MLP is a type of Feed Forward Network consiting of one input layer, no more than 3 hidden layers, and one output layer. Each layer has a set of Linear Threshold Units (neurons) that are interconnected by links, and each link has an associated connection weight. In addtion, each layer has a single Bias unit that is connected to all the units in the subsecuent layer. In theory, any three layer (input - hidden - output) MLP should be a Universal Approximator, meaning it is capable of modelling any non linear function arbitrarly well.
 
 **MLP Architecture**
 
+| Layer        | Type      | Output Shape | Parameters |
+|-------------|----------|-------------|------------|
+| Input       | —        | (784)       | 0          |
+| Dense_1     | Dense    | (224)       | 175,840    |
+| Activation  | ReLU     | (224)       | 0          |
+| Dropout     | 0.3      | (224)       | 0          |
+| Dense_2     | Dense    | (288)       | 64,800     |
+| Activation  | ReLU     | (288)       | 0          |
+| Dropout     | 0.3      | (288)       | 0          |
+| Output      | Dense    | (10)        | 2,890      |
+| Activation  | Softmax  | (10)        | 0          |
 
-#### **Training**
+**Total Parameters:** 243,530
+
+
+
+**Training**
 - Hyperparameter Tunning
 - Best model training
 - Data Augmentation
