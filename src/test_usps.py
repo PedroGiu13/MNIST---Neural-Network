@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 from sklearn.datasets import fetch_openml
 from sklearn.metrics import accuracy_score, confusion_matrix, ConfusionMatrixDisplay
 
-MLP_PATH = "models/mlp_1.h5"
-CNN_PATH = "models/cnn_1.h5"
+MLP_PATH = "models/mlp_model.h5"
+CNN_PATH = "models/cnn_model.h5"
 
 
 def load_and_preprocess_usps():
@@ -77,6 +77,9 @@ def evaluate_both_models():
     ax2.set_title(f"CNN Confusion Matrix\nAcc: {acc_cnn:.2%}")
 
     plt.suptitle("Model Robustness Comparison (USPS Dataset)", fontsize=16)
+
+    plt.savefig("img/mlp_cnn_cm.png")
+
     plt.tight_layout()
     plt.show()
 
