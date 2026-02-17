@@ -44,6 +44,8 @@ Input (784) → Dense(224) → ReLU → Dropout → Dense(288) → ReLU → Drop
 
 
 **- Performance**
+![MLP Confusion Matrix](img/mlp_model_cm.png)
+
  
 ### 2. Convolutional Neural Network (CNN)
 **- What is a Convolutional Neural Network?**
@@ -68,9 +70,12 @@ Input → Conv2D(32) → MaxPool → Conv2D(192) → MaxPool → Flatten → Den
 
 **- Training**
 
+| Accuracy | Loss |
+| :---: | :---: |
+| ![CNN Accuracy](img/cnn_model_accuracy.png) | ![CNN Loss](img/cnn_model_loss.png) |
 
 **- Performance**
-
+![CNN Confusion Matrix](img/cnn_model_cm.png)
 
 ---
 ## Performance in new domain
