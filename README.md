@@ -11,13 +11,15 @@ Both neural netweworks where trained using the same data (MNIST dataset) and the
 ---
 ## Components
 ### 1. Multilayer Perceptron (MLP)
+
 **What is a Multilayer Perceptron?**
+
 An MLP is a type of Feed Forward Network consiting of one input layer, no more than 3 hidden layers, and one output layer. Each layer has a set of Linear Threshold Units (neurons) that are interconnected by links, and each link has an associated connection weight. In addtion, each layer has a single Bias unit that is connected to all the units in the subsecuent layer. In theory, any three layer (input - hidden - output) MLP should be a Universal Approximator, meaning it is capable of modelling any non linear function arbitrarly well.
 
 **MLP Architecture**
 
 | Layer        | Type      | Output Shape | Parameters |
-|-------------|----------|-------------|------------|
+|:-----------:|:--------:|:-----------:|:----------:|
 | Input       | —        | (784)       | 0          |
 | Dense_1     | Dense    | (224)       | 175,840    |
 | Activation  | ReLU     | (224)       | 0          |
