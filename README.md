@@ -128,14 +128,18 @@ The MLP achieved an accuracy of 98%, correctly classified 9,800 out of 10,000 im
 ### 2. Convolutional Neural Network (CNN)
 **- What is a Convolutional Neural Network?**
 
-A CNN is a type of Deep Neural Network (ANN with more than 3 layers) specifically designed to recognize patterns in the data with tolerance to location. This means that CNN are able to detect the underlying structure hierarchy of the inputs. This is particularly useful in image recognitions, since the convolutional layers of the network detect the patterns of the images regardless of their location (if the image is tilted, rotated, etc). In order to do this, convolutional layers use Cross-Correlation insetad of an activiation function, meaning the same matrix of weights is applied to the entire input.
+A CNN is a specialized type of Deep Neural Network (ANN with more than 3 layers) designed to process data with grid-like topology, such as images. Unlike traditional fully connected networks (such as the MLP), CNNs are capable of recognize pattern (like edges or shapes) regardles of where they appear in the image. This is known as translation invariant or location tolerant.
+
+This property allows CNNs to learn the underlying hierarchical stucture of visual inputs and build complex features from simple ones. To achieve this, these networks have a convolutional layer that uses "parameter sharing", meaning that instead of assignig weights to every pixel, a small matrix of weights (kernel) slides accross the entire input prforming a cross-correlation operation
 
 $$
 Y(i,j) = (X * H) = \sum_{k,l} X(i+k, j+l) H(k,l)
 $$
 
-CNN have a more complex structure since most of the hidden layers are meant to find the patterns in the data with tolerance to location, before passing the it to a fully connected feedforward neural network.
-* Convolutional Layers
+CNNs posseses a more complex architecture than standard MLPs, as their initial hidden layers are meant to find the patterns in the data with tolerance to location, before passing the processed data to a fully connected feedforward neural network. It is common practice in modern acrchitectures to stack multiple sequences of convolutional and pooling layers.
+* Convolutional Layer: this is the core of CNNs. The objective of this layer is to find the hidden patterns with tolerance to location. The output of this layer is a feature map
+* Pooling Layer: after the convolutional layer it is common practice to use a pooling layer. This part of the network is responsible of increasing the networks translation invariance by reducing the feature maps with a single summary statistic (mean or maximum value).
+* Fully Connected Layer: this layer works as an MLP. In this part the classification process is executed.
 
 **- CNN Architecture**
 
