@@ -3,7 +3,7 @@
 ## Project Overview
 This project investigates the chanllenges of building and training an Artificial Neural Network for classifying handwritten digits. In particular, the project focuses on the differences between the classic Fully Connected Neural Network, the Multilayer Perceptron (MLP), and more advanced Deep Neural Networks, such as a Convolutional Neural Network (CNN).
 
-Both neural netweworks where trained using the same data (MNIST dataset) and then tested in a completely new dataset (USPS dataset). The end goal of the project is to understand how and why deep neural networks excell at this type of classification problems, and why 'shallower' neural networks struggle. Although, it should be theoretically possible to approximate any continuous function using a "simple" three layer ANN.
+Both neural networks were trained using the same data (MNIST dataset) and then tested in a completely new domain (USPS dataset). The end goal of the project is to understand how and why deep neural networks excell at this type of classification problems, and why 'shallower' neural networks struggle. Although, it should be theoretically possible to approximate any continuous function using a "simple" three layer ANN.
 
 ---
 ## Data
@@ -12,7 +12,11 @@ This project uses the **MNIST dataset** of handwritten digits to train both neur
 * **Authors:** Yann LeCun, Corinna Cortes, Christopher J.C. Burges
 * **Details:** The dataset contains 70,000 images divided into 60,000 training examples and 10,000 testing examples.
 
-In addition, the both models are evaluated in with an external dataset to test how well both networks generalize the data.
+<div align="center">
+  <img src="./img/MNIST data.png" width="50%" alt="MNIST Dataset">
+</div>
+
+In addition, both models are evaluated in with an external dataset to test how well both networks generalize the data.
 * **Source:** [USPS Database](https://ieeexplore.ieee.org/document/291440/authors#authors)
 * **Authors:** J. J. Hull
 * **Details:** The dataset contains 9.298 images divided into 7.291 training examples and 2007 testing examples
@@ -23,11 +27,11 @@ In addition, the both models are evaluated in with an external dataset to test h
 
 **- What is a Multilayer Perceptron?**
 
-An MLP is a type of Feed Forward Network consiting of one input layer, no more than 3 hidden layers, and one output layer. Each layer has a set of Linear Threshold Units (neurons) that are interconnected by links, and each link has an associated connection weight. In addtion, each layer has a single Bias unit that is connected to all the units in the subsecuent layer. In theory, any three layer (input - hidden - output) MLP should be a Universal Approximator, meaning it is capable of modelling any non linear function arbitrarly well.
+An MLP is a type of Feed Forward Network consiting of no more than 3 layers, one input layer, one or two hidden layers, and one output layer. Each layer has a set of Linear Threshold Units (neurons) that are interconnected by links, and each link has an associated connection weight. In addtion, each layer has a single Bias unit that is connected to all the units in the subsecuent layer. In theory, any three layer MLP should be a "Universal Approximator", meaning it is capable of modelling any non linear function arbitrarly well.
 
 **- MLP Architecture**
 
-The architecture of the MLP for this task consists of 3 layers. One input layer with 784 (28x28) nodes, followed by two hidden layers: the first with 224 nodes and the next with 288 nodes. The output layer consiste of 10 nodes representing each number from 0 to 9.
+The architecture of the MLP for this task consists of 3 layers. One input layer with 784 (28x28) nodes, followed by two hidden layers: the first with 224 nodes and the next with 288 nodes. Finally, an output layer made out of 10 nodes representing each number from 0 to 9.
 
 In order to make the network more robust and less prone to overfitting a dropout rate of 40% was chosen for both hidden layers. The dropout rate is a regularization method that "deactivates" a proportion of neurons, 40% in this case", to add noise to the training process and prevent co-adaptation of layers. Moreover, both hidden layers use a ReLU activation function, since it is the most common transfer fucntion because of its simplicity and ability to mitigate the vanishing gradient problem during training.
 
@@ -51,9 +55,20 @@ Input (784) → Dense(224) → Dense(288) → Dense(10)
 **Total Parameters:** 243,530  
 
 **- Training**
-- Hyperparameter Tunning
-- Best model training
-- Data Augmentation
+The training process of the MLP was done in different stages.
+
+**Hyperparameter Tunning:** first the framework 'KerasTuner' was used to apply a Random Search algorithm to find the most optimal set of hyperparameters. The 'tuner' was programmed to search:
+* Number of nodes in each hidden layer (32 - 512)
+* Dropout rate for each hidden layer (0.0 - 0.5)
+* Learning Rate (0.01, 0.001, 0.0001)
+After 10 iteration the best hyperparameters where:
+* Units in first hidden layer = 224
+* Units in second hidden layer = 288
+* Dropout rate = 0.4
+* Learining rate = 0.001
+
+**Model Training:** once we found the optimal set of hyperparameter the MLP was trained once again this time to estimate the weights using the backpropagation algorithm
+
 
 <table width="100%">
   <tr>
