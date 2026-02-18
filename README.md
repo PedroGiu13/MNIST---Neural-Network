@@ -153,6 +153,20 @@ Input → Conv2D(32) → MaxPool → Conv2D(192) → MaxPool → Dense(128) → 
 
 **- Training**
 
+
+
+The results of the model in the training and validation sets weere:
+
+<div align="center">
+
+| Dataset | Loss | Accuracy |
+| :--- | :---: | :---: |
+| **Training** | 0.0104 | 99.68% |
+| **Validation** | 0.0210 | 99.27% |
+
+</div>
+
+
 <table width="100%">
   <tr>
     <th align="center">Accuracy</th>
@@ -170,6 +184,15 @@ Input → Conv2D(32) → MaxPool → Conv2D(192) → MaxPool → Dense(128) → 
 
 
 **- Performance**
+
+<div align="center">
+
+| Dataset | Loss | Accuracy |
+| :--- | :---: | :---: |
+| **Test** | 0.0161 | 99.44% |
+
+</div>
+
 <div align="center">
   <img src="./img/cnn_model_cm.png" width="50%" alt="CNN confusion Matrix">
 </div>
@@ -238,7 +261,7 @@ python src/MLP.py
 python src/CNN.py
 ```
 
-### Evaluate on Unseen USPS Data
+### Evaluate on unseen USPS Data
 
 ```bash
 python src/test_usps.py
