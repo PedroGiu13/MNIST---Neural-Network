@@ -19,7 +19,7 @@ This project uses the **MNIST dataset** of handwritten digits to train both neur
 In addition, both models are evaluated in with an external dataset to test how well both networks generalize the data.
 * **Source:** [USPS Database](https://ieeexplore.ieee.org/document/291440/authors#authors)
 * **Authors:** J. J. Hull
-* **Details:** The dataset contains 9.298 images divided into 7.291 training examples and 2007 testing examples
+* **Details:** The dataset contains 9,298 images divided into 7,291 training examples and 2,007 testing examples
 
 ---
 ## Components
@@ -71,7 +71,7 @@ After 10 iteration the best hyperparameters where:
 
 **Model Training:** once the optimal set of hyperparameters was identified, the MLP was retrained to optimize the weights using the ADAM (Adaptive Moment Estimator) optimizer. 
 
-During this final phase, the full training dataset (60.000 images) was utilized, with 10% automatically reserved for validation to monitor performance. The training was set to 30 epochs, but an early stopping mechanism was introduced to halt the process if the validation loss stalled for five consecutive epochs, thervy conserving computation resources and preventing overfitting. Additionally, a batch size of 128 samples was selected to balance trainin speed with gradient stability.
+During this final phase, the full training dataset (60,000 images) was utilized, with 10% automatically reserved for validation to monitor performance. The training was set to 30 epochs, but an early stopping mechanism was introduced to halt the process if the validation loss stalled for five consecutive epochs, thervy conserving computation resources and preventing overfitting. Additionally, a batch size of 128 samples was selected to balance trainin speed with gradient stability.
 
 The results of the model in the training and validation sets weere:
 
@@ -102,6 +102,13 @@ The same structured can be observed in the loss plot, where the validation loss 
 
 **- Performance**
 
+To evaluate the performance of the trained MLP with "unseen" data the network is executed using the held-out test set, comparing the predicted labels against the actual digits. 
+
+The MLP achieved an accuracy of 98%, correctly classified 9,800 out of 10,000 images. The confusion matrix provided a more in-depth analysis of which digits the model struggled with the most. The most frequent errors involved the number 2 (misclassified by a 7) and the number 4 (misclassified by a 9). Since these pairs share significant morphological similarities, these missclasifications are expected limitation of a simple MLP.
+
+| Dataset | Loss | Accuracy |
+| :--- | :---: | :---: |
+| **Test** | 0.0652 | 98.01% |
 
 
 <div align="center">
