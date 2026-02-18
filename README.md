@@ -130,7 +130,9 @@ The MLP achieved an accuracy of 98%, correctly classified 9,800 out of 10,000 im
 
 **- CNN Architecture**
 
-Input → Conv2D(32) → MaxPool → Conv2D(192) → MaxPool → Flatten → Dense(128) → Dropout → Dense(10) → Softmax
+Input → Conv2D(32) → MaxPool → Conv2D(192) → MaxPool → Dense(128) → Dense(10)
+
+<div align="center">
 
 | Layer | Type | Output Shape | Parameters |
 |-------|------|-------------|------------|
@@ -142,6 +144,9 @@ Input → Conv2D(32) → MaxPool → Conv2D(192) → MaxPool → Flatten → Den
 | dense | Dense (ReLU) | (128) | 1,204,352 |
 | dropout | Dropout | (128) | 0 |
 | dense_1 | Dense (Softmax) | (10) | 1,290 |
+
+</div>
+
 
 **Total Parameters:** 1,261,452  
 
