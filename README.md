@@ -128,6 +128,15 @@ The MLP achieved an accuracy of 98%, correctly classified 9,800 out of 10,000 im
 ### 2. Convolutional Neural Network (CNN)
 **- What is a Convolutional Neural Network?**
 
+A CNN is a type of Deep Neural Network (ANN with more than 3 layers) specifically designed to recognize patterns in the data with tolerance to location. This means that CNN are able to detect the underlying structure hierarchy of the inputs. This is particularly useful in image recognitions, since the convolutional layers of the network detect the patterns of the images regardless of their location (if the image is tilted, rotated, etc). In order to do this, convolutional layers use Cross-Correlation insetad of an activiation function, meaning the same matrix of weights is applied to the entire input.
+
+$$
+Y(i,j) = (X * H) = \sum_{k,l} X(i+k, j+l) H(k,l)
+$$
+
+CNN have a more complex structure since most of the hidden layers are meant to find the patterns in the data with tolerance to location, before passing the it to a fully connected feedforward neural network.
+* Convolutional Layers
+
 **- CNN Architecture**
 
 Input → Conv2D(32) → MaxPool → Conv2D(192) → MaxPool → Dense(128) → Dense(10)
@@ -148,7 +157,7 @@ Input → Conv2D(32) → MaxPool → Conv2D(192) → MaxPool → Dense(128) → 
 </div>
 
 
-**Total Parameters:** 1,261,452  
+**Total Parameters:** 1,261,450
 
 
 **- Training**
