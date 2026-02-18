@@ -26,8 +26,14 @@ In addition, the both models are evaluated in with an external dataset to test h
 An MLP is a type of Feed Forward Network consiting of one input layer, no more than 3 hidden layers, and one output layer. Each layer has a set of Linear Threshold Units (neurons) that are interconnected by links, and each link has an associated connection weight. In addtion, each layer has a single Bias unit that is connected to all the units in the subsecuent layer. In theory, any three layer (input - hidden - output) MLP should be a Universal Approximator, meaning it is capable of modelling any non linear function arbitrarly well.
 
 **- MLP Architecture**
+The architecture of the MLP for this task consists of 3 layers. One input layer with 784 (28x28) nodes, followed by two hidden layers: the first with 224 nodes and the next with 288 nodes. The output layer consiste of 10 nodes representing each number from 0 to 9.
 
-Input (784) → Dense(224) → ReLU → Dropout → Dense(288) → ReLU → Dropout → Dense(10) → Softmax
+In order to make the network more robust and less prone to overfitting a dropout rate of 40% was chosen for both hidden layers. The dropout rate is a regularization method that "deactivates" a proportion of neurons, 40% in this case", to add noise to the training process and prevent co-adaptation of layers. In addition, both hidden layers use a ReLU activation function, since it is the most common transfer fucntion because of its simplicity and ability to mitigate the vanishing gradient problem during training.
+
+As mentioned in the beginning the output layer consists of 10 neurons, one for each number from 0 to 9. The activation function in this layer is the Softmax which assings a probability to each neuron. The neuron with the highest probability determines the model predicted number.
+
+
+Input (784) → Dense(224) → Dense(288) → Dense(10)
 
 | Layer | Type | Output Shape | Parameters |
 |-------|------|-------------|------------|
@@ -40,7 +46,7 @@ Input (784) → Dense(224) → ReLU → Dropout → Dense(288) → ReLU → Drop
 | dense_2 | Dense (10 units) | (10) | 2,890 |
 | activation_2 | Softmax | (10) | 0 |
 
-**Total Parameters:** 243,532  
+**Total Parameters:** 243,530  
 
 **- Training**
 - Hyperparameter Tunning
