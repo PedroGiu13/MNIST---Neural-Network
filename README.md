@@ -73,7 +73,7 @@ After 10 iteration the best hyperparameters where:
 
 During this final phase, the full training dataset (60.000 images) was utilized, with 10% automatically reserved for validation to monitor performance. The training was set to 30 epochs, but an early stopping mechanism was introduced to halt the process if the validation loss stalled for five consecutive epochs, thervy conserving computation resources and preventing overfitting. Additionally, a batch size of 128 samples was selected to balance trainin speed with gradient stability.
 
-The results of the model in the training and validation sets where:
+The results of the model in the training and validation sets weere:
 
 | Dataset | Loss | Accuracy |
 | :--- | :---: | :---: |
@@ -96,8 +96,14 @@ The results of the model in the training and validation sets where:
   </tr>
 </table>
 
+The trained MLP converges in an accuracy of aproximately 99% that was achieved after a sharp increase in the initial epochs, indicating that the model quickly identified the fundamental features of the digits. Moreover, the validation line tracks down the training line, which indicates that the model is nos overfitting. Otherwise, while the training accuracy increses, the validation accuracy would start to drop off.
+
+The same structured can be observed in the loss plot, where the validation loss remains extremely close to the training loss throughout the process. In addition, the fact both curves flatten out together indicates that the dropout rate and early stopping mechanism prevented the network to memorize the data.
 
 **- Performance**
+
+
+
 <div align="center">
   <img src="./img/mlp_model_cm.png" width="50%" alt="MLP confusion Matrix">
 </div>
