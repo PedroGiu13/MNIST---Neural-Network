@@ -55,19 +55,30 @@ Input (784) → Dense(224) → Dense(288) → Dense(10)
 **Total Parameters:** 243,530  
 
 **- Training**
+
 The training process of the MLP was done in different stages.
 
 **Hyperparameter Tunning:** first the framework 'KerasTuner' was used to apply a Random Search algorithm to find the most optimal set of hyperparameters. The 'tuner' was programmed to search:
 * Number of nodes in each hidden layer (32 - 512)
 * Dropout rate for each hidden layer (0.0 - 0.5)
 * Learning Rate (0.01, 0.001, 0.0001)
+
 After 10 iteration the best hyperparameters where:
 * Units in first hidden layer = 224
 * Units in second hidden layer = 288
 * Dropout rate = 0.4
 * Learining rate = 0.001
 
-**Model Training:** once we found the optimal set of hyperparameter the MLP was trained once again this time to estimate the weights using the backpropagation algorithm
+**Model Training:** once the optimal set of hyperparameters was identified, the MLP was retrained to optimize the weights using the ADAM (Adaptive Moment Estimator) optimizer. 
+
+During this final phase, the full training dataset (60.000 images) was utilized, with 10% automatically reserved for validation to monitor performance. The training was set to 30 epochs, but an early stopping mechanism was introduced to halt the process if the validation loss stalled for five consecutive epochs, thervy conserving computation resources and preventing overfitting. Additionally, a batch size of 128 samples was selected to balance trainin speed with gradient stability.
+
+The results of the model in the training and validation sets where:
+
+| Dataset | Loss | Accuracy |
+| :--- | :---: | :---: |
+| **Training** | 0.0213 | 99.42% |
+| **Validation** | 0.0234 | 99.40% |
 
 
 <table width="100%">
