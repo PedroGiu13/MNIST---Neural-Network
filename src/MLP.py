@@ -195,7 +195,9 @@ def mlp_network():
         f"{MODEL_NAME}_loss",
     )
 
-    plot_confusion_matrix(y_mnist=y_test, y_pred=y_pred, title="CNN - Confusion Matrix", file_name=f"{MODEL_NAME}_cm")
+    plot_confusion_matrix(
+        y_mnist=y_test, y_pred=y_pred, title=f"{MODEL_NAME}- Confusion Matrix", file_name=f"{MODEL_NAME}_cm"
+    )
 
     # Save model
     mlp.save(f"models/{MODEL_NAME}.h5")
