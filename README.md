@@ -7,6 +7,15 @@ Both neural netweworks where trained using the same data (MNIST dataset) and the
 
 ---
 ## Data
+This project uses the **MNIST dataset** of handwritten digits to train both neural networks.
+* **Source:** [The MNIST Database](http://yann.lecun.com/exdb/mnist/)
+* **Authors:** Yann LeCun, Corinna Cortes, Christopher J.C. Burges
+* **Details:** The dataset contains 70,000 images divided into 60,000 training examples and 10,000 testing examples.
+
+In addition, the both models are evaluated in with an external dataset to test how well both networks generalize the data.
+* **Source:** [USPS Database](https://ieeexplore.ieee.org/document/291440/authors#authors)
+* **Authors:** J. J. Hull
+* **Details:** The dataset contains 9.298 images divided into 7.291 training examples and 2007 testing examples
 
 ---
 ## Components
