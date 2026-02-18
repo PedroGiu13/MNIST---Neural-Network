@@ -41,6 +41,7 @@ As mentioned in the beginning the output layer consists of 10 neurons, one for e
 
 Input (784) → Dense(224) → Dense(288) → Dense(10)
 <div align="center">
+
 | Layer | Type | Output Shape | Parameters |
 |-------|------|-------------|------------|
 | dense | Dense (224 units) | (224) | 175,840 |
@@ -51,6 +52,7 @@ Input (784) → Dense(224) → Dense(288) → Dense(10)
 | dropout_1 | Dropout | (288) | 0 |
 | dense_2 | Dense (10 units) | (10) | 2,890 |
 | activation_2 | Softmax | (10) | 0 |
+
 </div>
 **Total Parameters:** 243,530  
 
@@ -76,10 +78,12 @@ During this final phase, the full training dataset (60,000 images) was utilized,
 The results of the model in the training and validation sets weere:
 
 <div align="center">
+
 | Dataset | Loss | Accuracy |
 | :--- | :---: | :---: |
 | **Training** | 0.0213 | 99.42% |
 | **Validation** | 0.0234 | 99.40% |
+
 </div>
 
 <table width="100%">
@@ -108,9 +112,11 @@ To evaluate the performance of the trained MLP with "unseen" data the network is
 The MLP achieved an accuracy of 98%, correctly classified 9,800 out of 10,000 images. The confusion matrix provided a more in-depth analysis of which digits the model struggled with the most. The most frequent errors involved the number 2 (misclassified by a 7) and the number 4 (misclassified by a 9). Since these pairs share significant morphological similarities, these missclasifications are expected limitation of a simple MLP.
 
 <div align="center">
+
 | Dataset | Loss | Accuracy |
 | :--- | :---: | :---: |
 | **Test** | 0.0652 | 98.01% |
+
 </div>
 
 
