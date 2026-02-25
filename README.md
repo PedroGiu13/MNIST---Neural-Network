@@ -249,6 +249,16 @@ The CNN achieved an exceptional test accuracy of 99.44%, correctly classifying 9
 
 ---
 ## Performance in new domain
+
+To evaluate the true generalization capabilities and robustness of the trained networks, both models were subjected to out-of-distribution testing using the USPS handwritten digit dataset. Because the USPS dataset features different handwriting styles, stroke thicknesses, and spatial scales compared to the original training data, this serves as a rigorous test of whether the models learned universal digit patterns or merely memorized pixel locations.
+
+When exposed to the new USPS data, the MLP's accuracy collapsed to just 41.18%. The confusion matrix reveals massive, systematic misclassifications. For example, the model almost entirely failed to recognize the digit "1", misclassifying it as an "8" over 1,100 times. Similarly, true "7"s were heavily mislabeled as "2"s. This severe degradation proves that the MLP rigidly memorized the exact spatial pixel locations of the original dataset and lacks the flexibility to handle new handwriting styles.
+
+In contrast, the Convolutional Neural Network maintained an outstanding accuracy of 97.45%. The confusion matrix shows a highly concentrated diagonal, indicating strong, reliable predictions across all ten classes. While minor errors occurred (such as confusing a true "9" for a "7" in 37 instances, or an "8" for a "0" in 29 instances), these are isolated cases likely due to highly ambiguous handwriting.
+
+This comparison starkly illustrates the architectural superiority of CNNs for computer vision. Because the CNN utilized parameter sharing and pooling layers to achieve translation invariance, it successfully learned the underlying morphological features of the digits (edges, loops, and curves) rather than their exact grid coordinates. As a result, it easily adapted to the unfamiliar USPS dataset, whereas the standard MLP failed.
+
+
 <div align="center">
   <img src="./img//mlp_cnn_cm.png" width="50%" alt="MLP vs. CNN Confusion Matrix">
 </div>
