@@ -146,6 +146,7 @@ CNNs posseses a more complex architecture than standard MLPs, as their initial h
 
 The structure of the CNN created for this project consists of two convolutional layers, each followed by a corresponding pooling layer, as well as a fully connected network containing one hidden layer and the final output layer. The model takes as an input a 28x28 array of pixels with one color channel (black and white). The first convolutional layer has a kernel size of 3x3 and outputs 32 feature maps, then the pooling layer uses the maximum as summary statistic to reduce the output shape to 14x14 of the 32 feature maps. The second convolutional layer uses the same 3x3 kernel size and outputs 192 feature maps of size 14x4, before reducing their shape to 7x7 after applying the same pooling layer.
 
+The output of all the convolutional layers is then flatten to connect the last pooling layer with the fully connected feedforward network. This MLP has one hidden layer with 128 nodes and uses the ReLU as activation function. The final output layer consists consists of 10 neurons, one for each number from 0 to 9. The activation function in this layer is the Softmax which assings a probability to each neuron. The neuron with the highest probability determines the model predicted number.
 
 *Architecture Flow:*
 
