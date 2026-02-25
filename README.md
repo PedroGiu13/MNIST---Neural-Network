@@ -191,7 +191,9 @@ After 10 itereation the best hyperparameters are:
 * Dropout rate = 0.2
 * Learning rate = 0.001
 
-**Data Augmentation:** to further imporve the models performance the data was augmented by rotating, shifting, and zoming the images. This process enriches the training sample without having to add more data. It is important to mention that the level of rotation is very sensitive here since a number can change depending on the rotations. For example, the number one can be interpreted as a seven if it is rotated too much. The same applies to the number six and nine. 
+**Data Augmentation:** to further improve the model's generalization and prevent overfitting, data augmentation was applied by introducing random rotations, spatial shifts, and zooming to the images. This technique synthetically enriches the training set, allowing the model to learn from a wider variety of representations without requiring the collection of additional data.
+
+However, the parameters for these transformations, particularly the degree of rotation, must be strictly constrained for digit recognition tasks. Unlike standard image classification (where a cat is still a cat upside down), handwritten digits are highly sensitive to orientation. For instance, excessive rotation can cause a "1" to become indistinguishable from a "7", or effectively invert a "6" into a "9". Therefore, the augmentation ranges were kept intentionally small to introduce helpful variance without corrupting the underlying labels.
 
 **Model Training:** with the optimal set of paramateres and the enriched training data, the CNN was retrained to optimize the weights using the ADAM optimizer. 
 
@@ -224,8 +226,14 @@ The results of the model in the training and validation sets are:
   </tr>
 </table>
 
+Both the loss and accuracy plots illustrate a healthy, stable training process with no signs of overfitting. The most notable feature in both graphs is that the validation metrics consistently outperform the training metrics (blue lines). This is a direct result of the regularization techniques applied during training, specifically the 40% Dropout and spatial data augmentation, which artificially handicap the model to prevent memorization. During validation, these handicaps are removed, revealing the model's true predictive capability. Both sets of curves converge smoothly and plateau after the initial epochs, confirming the network learned the underlying patterns effectively.
+
 
 **- Performance**
+
+To evaluate the performance of the tuned CNN on unseen data, the network was evaluated against the held-out test set, comparing the predicted labels to the actual digits.
+
+The CNN achieved an exceptional test accuracy of 99.44%, correctly classifying 9,944 out of 10,000 images. This represents a substantial improvement over the baseline MLP architecture. The confusion matrix provides a granular breakdown of the network's remaining misclassifications. While errors were exceedingly rare, this type of network continues to struggle with the number 2 (misclassified as a 7) and the number 4 (misclassified as a 9). Because the CNN is highly adept at extracting complex spatial features, these isolated errors likely represent highly distorted or ambiguously written digits where severe morphological similarities would challenge even human readers.
 
 <div align="center">
 
