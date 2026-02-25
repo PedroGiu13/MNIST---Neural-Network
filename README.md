@@ -61,7 +61,7 @@ Input (784) → Dense(224) → Dense(288) → Dense(10)
 
 The training process of the MLP was done in different stages.
 
-**Hyperparameter Tunning:** first the framework 'KerasTuner' was used to apply a Random Search algorithm to find the most optimal set of hyperparameters. The 'tuner' was programmed to search:
+**Hyperparameter Tuning:** first the framework 'KerasTuner' was used to apply a Random Search algorithm to find the most optimal set of hyperparameters. The 'tuner' was programmed to search:
 * Number of nodes in each hidden layer (32 - 512)
 * Dropout rate for each hidden layer (0.0 - 0.5)
 * Learning Rate (0.01, 0.001, 0.0001)
@@ -74,9 +74,9 @@ After 10 iteration the best hyperparameters where:
 
 **Model Training:** once the optimal set of hyperparameters was identified, the MLP was retrained to optimize the weights using the ADAM (Adaptive Moment Estimator) optimizer. 
 
-During this final phase, the full training dataset (60,000 images) was utilized, with 10% automatically reserved for validation to monitor performance. The training was set to 30 epochs, but an early stopping mechanism was introduced to halt the process if the validation loss stalled for five consecutive epochs, thervy conserving computation resources and preventing overfitting. Additionally, a batch size of 128 samples was selected to balance trainin speed with gradient stability.
+During this final phase, the full training dataset (60,000 images) was utilized, with 10% automatically reserved for validation to monitor performance. The training was set to 30 epochs, but an early stopping mechanism was introduced to halt the process if the validation loss stalled for five consecutive epochs, therby conserving computation resources and preventing overfitting. Additionally, a batch size of 128 samples was selected to balance trainin speed with gradient stability.
 
-The results of the model in the training and validation sets weere:
+The results of the model in the training and validation sets are:
 
 <div align="center">
 
@@ -173,9 +173,31 @@ Input → Conv2D(32) → MaxPool → Conv2D(192) → MaxPool → Dense(128) → 
 
 **- Training**
 
+Just as in the MLP, the training process of the CNN was done in two separate stages.
 
+**Hyperparameter Tuning:** the same framework 'KerasTuner" was used to apply a Random Search algorithm to find the most optimal set of hyperparameters. The tuner was programmed to search for:
+* Number of filters and the kernel size for the first convolutional layer
+* Check if another convolutional layer is needed. If yes, define the number of filters (kernel size will be the same as the previous layer)
+* Number of units in the hidden layers of the MLP (64 - 256)
+* Dropout rate (0.0 - 0.5)
+* Learning Rate (0.01, 0.001, 0.0001)
 
-The results of the model in the training and validation sets weere:
+After 10 itereation the best hyperparameters are:
+* Convolutional layers = 2
+* Filter size in first layer = 32 filters
+* Filter size in second layer = 192 filters
+* Kernel size = 3x3
+* Units in first hidden layer = 128
+* Dropout rate = 0.2
+* Learning rate = 0.001
+
+**Data Augmentation:** to further imporve the models performance the data was augmented by rotating, shifting, and zoming the images. This process enriches the training sample without having to add more data. It is important to mention that the level of rotation is very sensitive here since a number can change depending on the rotations. For example, the number one can be interpreted as a seven if it is rotated too much. The same applies to the number six and nine. 
+
+**Model Training:** with the optimal set of paramateres and the enriched training data, the CNN was retrained to optimize the weights using the ADAM optimizer. 
+
+The training was set to 30 epochs, but an early stopping mechanism was introduced to halt the process if the validation loss stalled for five consecutive epochs, therby conserving computation resources and preventing overfitting. Additionally, a batch size of 128 samples was selected to balance training speed with gradient stability.
+
+The results of the model in the training and validation sets are:
 
 <div align="center">
 
